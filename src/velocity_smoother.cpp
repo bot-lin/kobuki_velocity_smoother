@@ -52,6 +52,8 @@ VelocitySmoother::VelocitySmoother(const rclcpp::NodeOptions & options)
   pr_next_(0)
 {
   double frequency = this->declare_parameter("frequency", 20.0);
+  std::string vel_input =  this->declare_parameter<std::string>("vel_input", "vel_cmd_nav");
+  std::string vel_output = this->declare_parameter<std::string>("vel_output", "vel_cmd");
   this->declare_parameter("quiet", false);
   this->declare_parameter("decel_factor", 1.0);
   int feedback = this->declare_parameter("feedback", static_cast<int>(NONE));
@@ -79,9 +81,9 @@ VelocitySmoother::VelocitySmoother(const rclcpp::NodeOptions & options)
     "~/feedback/cmd_vel", rclcpp::QoS(1),
     std::bind(&VelocitySmoother::robotVelCB, this, std::placeholders::_1));
   raw_in_vel_sub_ = this->create_subscription<geometry_msgs::msg::Twist>(
-    "~/input", rclcpp::QoS(1),
+    vel_input , rclcpp::QoS(1),
     std::bind(&VelocitySmoother::velocityCB, this, std::placeholders::_1));
-  smooth_vel_pub_ = this->create_publisher<geometry_msgs::msg::Twist>("~/smoothed", 1);
+  smooth_vel_pub_ = this->create_publisher<geometry_msgs::msg::Twist>(vel_output, 1);
 
   period_ = 1.0 / frequency;
   timer_ = this->create_wall_timer(
