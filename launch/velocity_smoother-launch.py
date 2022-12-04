@@ -17,7 +17,7 @@ import yaml
 
 
 def generate_launch_description():
-    share_dir = ament_index_python.packages.get_package_share_directory('velocity_smoother')
+    share_dir = ament_index_python.packages.get_package_share_directory('kobuki_velocity_smoother')
 
     # There are two different ways to pass parameters to a non-composed node;
     # either by specifying the path to the file containing the parameters, or by
@@ -29,8 +29,8 @@ def generate_launch_description():
     with open(params_file, 'r') as f:
         params = yaml.safe_load(f)['velocity_smoother']['ros__parameters']
     velocity_smoother_node = launch_ros.actions.Node(
-        package='velocity_smoother',
-        executable='velocity_smoother',
+        package='kobuki_velocity_smoother',
+        executable='velocity_smoother_node',
         name='velocity_smoother',
         output='both',
         parameters=[params])
