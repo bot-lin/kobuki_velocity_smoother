@@ -52,8 +52,8 @@ VelocitySmoother::VelocitySmoother(const rclcpp::NodeOptions & options)
   pr_next_(0)
 {
   double frequency = this->declare_parameter("frequency", 20.0);
-  std::string vel_input =  this->declare_parameter<std::string>("vel_input", "vel_cmd_nav");
-  std::string vel_output = this->declare_parameter<std::string>("vel_output", "vel_cmd");
+  std::string vel_input =  this->declare_parameter<std::string>("vel_input", "cmd_vel_nav");
+  std::string vel_output = this->declare_parameter<std::string>("vel_output", "cmd_vel");
   this->declare_parameter("quiet", false);
   this->declare_parameter("decel_factor", 1.0);
   int feedback = this->declare_parameter("feedback", static_cast<int>(NONE));
