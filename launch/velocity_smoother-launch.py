@@ -30,7 +30,7 @@ def generate_launch_description():
         params = yaml.safe_load(f)['kobuki_velocity_smoother']['ros__parameters']
     velocity_smoother_node = launch_ros.actions.Node(
         package='kobuki_velocity_smoother',
-        executable='velocity_smoother_node',
+        executable='velocity_smoother',
         name='kobuki_velocity_smoother',
         output='both',
         parameters=[params])
