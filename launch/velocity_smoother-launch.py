@@ -31,7 +31,7 @@ def generate_launch_description():
     velocity_smoother_node = launch_ros.actions.Node(
         package='kobuki_velocity_smoother',
         executable='velocity_smoother_node',
-        name='velocity_smoother',
+        name='kobuki_velocity_smoother',
         output='both',
         parameters=[params])
 
