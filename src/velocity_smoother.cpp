@@ -54,6 +54,8 @@ VelocitySmoother::VelocitySmoother(const rclcpp::NodeOptions & options)
   double frequency = this->declare_parameter("frequency", 20.0);
   std::string vel_input =  this->declare_parameter<std::string>("vel_input", "cmd_vel_nav");
   std::string vel_output = this->declare_parameter<std::string>("vel_output", "cmd_vel");
+  std::string odom_feedback = this->declare_parameter<std::string>("odom_feedback", "odom");
+  std::string command_feedback = this->declare_parameter<std::string>("command_feedback", "cmd_vel");
   this->declare_parameter("quiet", false);
   this->declare_parameter("decel_factor", 1.0);
   int feedback = this->declare_parameter("feedback", static_cast<int>(NONE));
@@ -75,10 +77,10 @@ VelocitySmoother::VelocitySmoother(const rclcpp::NodeOptions & options)
 
   // Publishers and subscribers
   odometry_sub_ = this->create_subscription<nav_msgs::msg::Odometry>(
-    "~/feedback/odometry", rclcpp::QoS(1),
+    odom_feedback, rclcpp::QoS(1),
     std::bind(&VelocitySmoother::odometryCB, this, std::placeholders::_1));
   current_vel_sub_ = this->create_subscription<geometry_msgs::msg::Twist>(
-    "~/feedback/cmd_vel", rclcpp::QoS(1),
+    command_feedback, rclcpp::QoS(1),
     std::bind(&VelocitySmoother::robotVelCB, this, std::placeholders::_1));
   raw_in_vel_sub_ = this->create_subscription<geometry_msgs::msg::Twist>(
     vel_input , rclcpp::QoS(1),
