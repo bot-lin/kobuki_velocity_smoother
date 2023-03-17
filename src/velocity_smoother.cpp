@@ -165,7 +165,7 @@ void VelocitySmoother::timerCB()
 
   if ((input_active_ == true) && (cb_avg_time_ > 0.0) &&
     ((this->get_clock()->now() - last_velocity_cb_time_).seconds() >
-    std::min(20.0 * cb_avg_time_, 0.5)))
+    std::min(200.0 * cb_avg_time_, 0.5)))
   {
     // Velocity input not active anymore; normally last command is a zero-velocity one, but reassure
     // this, just in case something went wrong with our input, or he just forgot good manners...
@@ -180,7 +180,7 @@ void VelocitySmoother::timerCB()
         " zeroing...",
         target_vel_.linear.x,
         target_vel_.angular.z,
-        3.0 * cb_avg_time_);
+        20.0 * cb_avg_time_);
       target_vel_ = geometry_msgs::msg::Twist();
     }
   }
