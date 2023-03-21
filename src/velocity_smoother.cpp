@@ -204,7 +204,7 @@ void VelocitySmoother::timerCB()
 
   // 5 missing msgs
   if ((feedback_ != NONE) && (input_active_ == true) && (cb_avg_time_ > 0.0) &&
-    (((this->get_clock()->now() - last_velocity_cb_time_).seconds() > 5.0 * cb_avg_time_) ||
+    (((this->get_clock()->now() - last_velocity_cb_time_).seconds() > 5000.0 * cb_avg_time_) ||
     v_different_from_feedback || w_different_from_feedback))
   {
     // If the publisher has been inactive for a while, or if our current commanding differs a lot
